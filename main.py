@@ -1,6 +1,23 @@
 from opensearchpy import OpenSearch, RequestsHttpConnection, AWSV4SignerAuth
 import boto3
 
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/opensearch")
+def read_root():
+    
+    response = client.search(
+        body = query,
+        index = 'opensearch_dashboards_sample_data_flights'
+    )
+
+    print('response - match xico')
+    print(response)
+    
+    return {"Hello": "World"}
+
 host = 'vpc-yr-vtr-kk66ndzelsd5nyucwx7h2dvkoi.ap-northeast-2.es.amazonaws.com' # cluster endpoint, for example: my-test-domain.us-east-1.es.amazonaws.com
 region = 'ap-northeast-2'
 service = 'es'
@@ -26,11 +43,3 @@ query = {
     }
   }
 }
-
-response = client.search(
-    body = query,
-    index = 'opensearch_dashboards_sample_data_flights'
-)
-
-print('response - match xico')
-print(response)
